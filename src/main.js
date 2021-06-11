@@ -1,4 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+//import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+createApp(App)
+//.use(BootstrapVue, IconsPlugin)
+.mount('#service-address-dashboard')
