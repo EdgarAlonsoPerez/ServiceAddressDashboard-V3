@@ -1,14 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 in CodeSandbox!" />
+  <Header/>
+  <Content/>
+  <!--Footer/-->
 </template>
 
 <script>
-import HelloWorldVue from "./components/HelloWorld.vue";
+// import HelloWorldVue from "./components/HelloWorld.vue";
+import Header from "./components/structure/Header.vue";
+import Content from "./components/structure/Content.vue";
+// import Footer from "./components/structure/Footer.vue";
+// import Location from "./components/location/Location.vue";
+
+
 export default {
+  data(){
+    return {
+      text:"Primevue"
+    }
+  },
   name: "App",
   components: {
-    HelloWorld: HelloWorldVue,
+    Header,
+    Content,
+    // Footer
   },
 };
 </script>
@@ -21,5 +35,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  
 }
 </style>
