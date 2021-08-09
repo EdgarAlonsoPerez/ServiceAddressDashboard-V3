@@ -13,7 +13,7 @@
                 </div>
                 <div class="p-field p-col-6 p-md-6">
                     <span class="p-float-label">
-                        <Dropdown id="sel-municipality" v-model="selectedMunicipality" :options="filteredMunicipalities" optionLabel="name" />
+                        <Dropdown id="sel-municipality"  @change="setMunicipality" v-model="selectedMunicipality" :options="filteredMunicipalities" optionLabel="name" />
                         <label for="sel-municipality">Municipality</label>
                     </span>
                 </div>
@@ -50,18 +50,23 @@ export default {
       Dropdown
   },
   methods:{
-      searchLocation(event){
-          this.filteredLocations = this.LocationService.searchLocationByCity(event.query)
-      },
-      searchCity(event){
-          this.filteredCities =  this.LocationService.searchCity(event.query)
-          console.log(this.filteredCities);
-      },
-      updateMunicipalities(event){
-          console.log(event.value)
-          this.filteredMunicipalities =  event.value.municipalities
-      }
-  }
+    searchLocation(event){
+        this.filteredLocations = this.LocationService.searchLocationByCity(event.query)
+    },
+    searchCity(event){
+        this.filteredCities =  this.LocationService.searchCity(event.query)
+        console.log(this.filteredCities);
+    },
+    updateMunicipalities(event){
+        this.filteredMunicipalities =  event.value.municipalities
+        if(this.filteredMunicipalities.length == 0){
+            this.$emit('municipality-has-change', {'city':this.selectedCity,'municipality':this.selectedMunicipality})
+        }
+    },
+    setMunicipality(){
+        this.$emit('municipality-has-change', {'city':this.selectedCity,'municipality':this.selectedMunicipality})
+    },
+}
 }
 </script>
 

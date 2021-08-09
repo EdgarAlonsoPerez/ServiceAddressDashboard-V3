@@ -65,16 +65,6 @@ export default class LocationService {
 
     }
 
-    searchLocationByCity = (query) => {
-        let newFilteredItems = [];
-
-        let filteredItems = FilterService.filter(this.cities, ['name'], query, FilterMatchMode.CONTAINS);
-        if (filteredItems && filteredItems.length) {
-            newFilteredItems.push({... { items: filteredItems } });
-        }
-        console.log(filteredItems)
-        return newFilteredItems;
-    }
     searchCity(query) {
         let newFilteredItems = [];
         if (this.cities.length == 0) {

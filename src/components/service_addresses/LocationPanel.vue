@@ -6,22 +6,20 @@
                 Location List
             </template>
             <template #content>
-                <div class="p-grid">
-                    <div class="p-col-4">4</div>
-                    <div class="p-col">1</div>
-                    <div class="p-col">1</div>
-                    <div class="p-col">1</div>
-                    <div class="p-col">1</div>
-                    <div class="p-col">1</div>
-                    <div class="p-col">1</div>
-                    <div class="p-col">1</div>
-                    <div class="p-col">1</div>
-                </div>
-
-                <div class="p-grid">
-                    <div class="p-col-2">2</div>
-                    <div class="p-col-6">6</div>
-                    <div class="p-col-4">4</div>
+                <div>
+                    <DataTable
+                        :value="serviceAddresses" 
+                        v-model:selection="selectedLocation" 
+                        selectionMode="single" 
+                        dataKey="id" 
+                        @rowSelect="onRowSelect" 
+                        @rowUnselect="onRowUnselect" 
+                        responsiveLayout="scroll" 
+                    >
+                        <Column field="id" header="Internal Id"></Column>
+                        <Column field="fullAddress" header="Address"></Column>
+                        <Column field="parentAddress" header="Parent"></Column>
+                    </DataTable>
                 </div>
             </template>
             <template #footer>
@@ -39,26 +37,44 @@
 </template>
 
 <script>
+    import serviceAddressesService  from '../../services/ServiceAddressesService.js'
+    import DataTable from 'primevue/datatable';
+    import Column from 'primevue/column';
+    // import ColumnGroup from 'primevue/columngroup'; 
 
     export default {
         name: "LocationPanel",
-        props: {},
+        props: {
+            city : Object,
+            municipality: Object
+        },
         data(){
             return {
-                selectedCity:null,
-                filteredCities:null,
-                filteredMunicipalities:[],
-                selectedMunicipality:null
+                serviceAddresses:[],
+                serviceAddressesService:null,
+                selectedLocation:null
+            }
+        },
+        watch:{
+           async city(){
+                this.serviceAddresses = await this.serviceAddressesService.getServiceAddresses({cityId:this.city.id})
+                console.log(this.serviceAddresses)
             }
         },
         created(){
-            
+            this.serviceAddressesService = new serviceAddressesService()
         },
         components:{
-            
+            DataTable,
+            Column
         },
         methods:{
-            
+            onRowSelect(event) {
+                console.log(event.data);
+            },
+            onRowUnselect(event) {
+                 console.log(event.data);
+            }
         }
     }
 </script>

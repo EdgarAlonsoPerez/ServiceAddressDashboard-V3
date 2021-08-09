@@ -1,16 +1,16 @@
 <template>
     <div class="p-grid">
         <div class="p-md-12">
-            <Location></Location>
+            <Location @municipality-has-change="updateLocationPanel"></Location>
         </div>
+        
         <Divider/>
-
         <div class="p-md-6">
-            <LocationPanel/>
+            <LocationPanel :municipality="selectedMunicipality" :city="selectedCity"/>
         </div>
         
         <div class="p-md-6">
-            <SuitePanel/>
+            <SuitePanel />
         </div>
         
   </div>
@@ -28,11 +28,23 @@ export default {
   props: {
     msg: String,
   },
+  data(){
+    return {
+      selectedCity:null,
+      selectedMunicipality:null
+    }
+  },
   components: {
       Location,
       LocationPanel,
       SuitePanel,
       Divider
+  },
+  methods:{
+    updateLocationPanel(location){
+      this.selectedCity = location.city;
+      this.selectedMunicipality = location.municipality
+    }
   }
 };
 </script>
